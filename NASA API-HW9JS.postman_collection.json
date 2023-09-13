@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "9dd1ea7b-66bd-470a-8c9d-503697279a97",
+		"name": "NASA API-HW9JS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29356519"
+	},
+	"item": [
+		{
+			"name": "NASA Image and Video Library",
+			"item": [
+				{
+					"name": "EPIC Earth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is an image file\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 35000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(35000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is not empty\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content type header is set to 'image/png'\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"image/png\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response header content is correct\", function () {\r",
+									"    pm.response.to.have.header('Content-Type', 'image/png');\r",
+									"    pm.response.to.have.header('Connection', 'keep-alive');\r",
+									"    pm.response.to.have.header('Access-Control-Allow-Origin', '*');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=DEMO_KEY",
+							"protocol": "https",
+							"host": [
+								"api",
+								"nasa",
+								"gov"
+							],
+							"path": [
+								"EPIC",
+								"archive",
+								"natural",
+								"2019",
+								"05",
+								"30",
+								"png",
+								"epic_1b_20190530011359.png"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "DEMO_KEY"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mars img.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 700ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+									"});\r",
+									" \r",
+									"\r",
+									"pm.test(\"Header content is correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response Size is less than 100000B\", function () {\r",
+									"    pm.expect(pm.response.responseSize).to.be.below(100000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The response content type should be image/jpeg\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"image/jpeg\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is not null\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000ML0044631200305217E01_DXXX.jpg",
+							"protocol": "http",
+							"host": [
+								"mars",
+								"jpl",
+								"nasa",
+								"gov"
+							],
+							"path": [
+								"msl-raw-images",
+								"msss",
+								"01000",
+								"mcam",
+								"1000ML0044631200305217E01_DXXX.jpg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APOD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is within acceptable range\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"var responseJSON = pm.response.json();\r",
+									"\r",
+									"// Test the response body structure and values\r",
+									"pm.test(\"Response body structure is valid\", function () {\r",
+									"    pm.expect(responseJSON).has.property('copyright');\r",
+									"    pm.expect(responseJSON).has.property('date');\r",
+									"    pm.expect(responseJSON).has.property('explanation');\r",
+									"    pm.expect(responseJSON).has.property('hdurl');\r",
+									"    pm.expect(responseJSON).has.property('media_type');\r",
+									"    pm.expect(responseJSON).has.property('service_version');\r",
+									"    pm.expect(responseJSON).has.property('title');\r",
+									"    pm.expect(responseJSON).has.property('url');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.include.all.keys('copyright', 'date', 'explanation', 'hdurl', 'media_type', 'service_version', 'title', 'url');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Date is in a valid date format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.date).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"hdurl and url are valid URLs\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.hdurl).to.match(/^https?:\\/\\/\\w+(\\.\\w+)*(:\\d+)?(\\/\\S*)?$/, \"hdurl is not a valid URL\");\r",
+									"    pm.expect(responseData.url).to.match(/^https?:\\/\\/\\w+(\\.\\w+)*(:\\d+)?(\\/\\S*)?$/, \"url is not a valid URL\");\r",
+									"});\r",
+									"\r",
+									"// Test for response body structure and values\r",
+									"pm.test(\"Response body should be an object\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should have a 'copyright' property\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('copyright');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has a valid media_type\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.media_type).to.exist.and.to.be.oneOf(['image', 'video'], \"Value should be either image or video\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"hdurl and url should not be empty\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.hdurl).to.exist.and.to.not.be.empty;\r",
+									"    pm.expect(responseData.url).to.exist.and.to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Title is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Explanation is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.explanation).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Explanation should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Service version is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.service_version).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY",
+							"protocol": "https",
+							"host": [
+								"api",
+								"nasa",
+								"gov"
+							],
+							"path": [
+								"planetary",
+								"apod"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "DEMO_KEY"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Omega Nebula 2023.jpg",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response content type is image/jpeg\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"image/jpeg\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an image file\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response content type is image/jpeg\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image/jpeg\");\r",
+							"});\r",
+							"pm.test(\"header content is correct\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has a valid file extension\", function () {\r",
+							"    const contentType = pm.response.headers.get(\"Content-Type\");\r",
+							"\r",
+							"    pm.expect(contentType).to.exist.and.to.match(/image\\/(jpeg|jpg|png|gif)/);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apod.nasa.gov/apod/image/2309/OmegaNebulaGrandMesaObservatory2023.jpg",
+					"protocol": "https",
+					"host": [
+						"apod",
+						"nasa",
+						"gov"
+					],
+					"path": [
+						"apod",
+						"image",
+						"2309",
+						"OmegaNebulaGrandMesaObservatory2023.jpg"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
